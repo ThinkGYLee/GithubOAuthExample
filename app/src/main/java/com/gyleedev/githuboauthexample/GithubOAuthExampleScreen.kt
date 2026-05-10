@@ -58,9 +58,10 @@ fun GithubOAuthExampleScreen(
                 // 리다이렉트된 Uri가 존재하는지 확인
                 if (resultUri != null) {
                     val code = resultUri.getQueryParameter("code")
-
+                    println(resultUri)
                     // 최종적으로 코드를 추출하여 상태를 업데이트
                     if (code != null) {
+                        println(code)
                         println("Success")
                     }
                 }
