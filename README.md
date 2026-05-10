@@ -9,7 +9,7 @@
 ##  블로그 상세 설명
 
 프로젝트의 상세한 배경과 기술적인 분석은 아래 벨로그 포스팅에서 확인하실 수 있습니다.
-👉 **[벨로그: Github OAuth App 인증 절차를 Compose 에 맞게 리팩토링 해보기(AuthTab 을 사용하자)]()**
+👉 **[벨로그: Github OAuth App 인증 절차를 Compose 에 맞게 리팩토링 해보기(AuthTab 을 사용하자)](https://velog.io/@gylee0311/Github-OAuth-App-%EC%9D%B8%EC%A6%9D-%EC%A0%88%EC%B0%A8%EB%A5%BC-Compose-%EC%97%90-%EB%A7%9E%EA%B2%8C-%EB%A6%AC%ED%8C%A9%ED%84%B0%EB%A7%81-%ED%95%B4%EB%B3%B4%EA%B8%B0AuthTab-%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EC%9E%90)**
 
 ---
 
