@@ -7,6 +7,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.browser.auth.AuthTabIntent
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
@@ -42,15 +44,13 @@ fun GithubOAuthExampleScreen(
         )
     }
 
-
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
         // 사용자가 브라우저를 닫았을 때 호출됨
-
         if (result.resultCode == Activity.RESULT_OK) {
             val intent = result.data
-
+            println("result : Activity.RESULT_OK")
             // 전달된 인텐트 데이터가 있는지 확인
             if (intent != null) {
                 val resultUri = intent.data
@@ -61,21 +61,27 @@ fun GithubOAuthExampleScreen(
 
                     // 최종적으로 코드를 추출하여 상태를 업데이트
                     if (code != null) {
-                        println("성공")
+                        println("Success")
                     }
                 }
             }
         }
         // 결과 코드만 확인 가능, 리다이렉트된 URL의 데이터는 없음.
         if (result.resultCode == Activity.RESULT_CANCELED) {
-            println("코드를 받을 수 없습니다. ")
+            println("result : Activity.RESULT_CANCELED")
+            println("[Failure] : Can't detect code")
         }
     }
 
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Button(
             onClick = {
                 // 일반적인 CustomTabsIntent를 생성합니다.
+                println("CustomTab Authentication Start")
                 val intent = CustomTabsIntent.Builder().build().intent
                 intent.data = loginUrl.toUri()
                 intent.flags = FLAG_ACTIVITY_SINGLE_TOP
@@ -90,11 +96,12 @@ fun GithubOAuthExampleScreen(
             )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(32.dp))
 
         Button(
             onClick = {
                 // AuthTabIntent를 생성합니다.
+                println("CustomTab Authentication Start")
                 val authTabIntent = AuthTabIntent.Builder().build()
 
                 // 런처를 통해 인증을 시작합니다.
