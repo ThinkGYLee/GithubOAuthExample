@@ -1,3 +1,8 @@
+import org.jetbrains.kotlin.konan.properties.hasProperty
+import java.io.FileInputStream
+import java.io.InputStreamReader
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -19,6 +24,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "CLIENT_ID", "\"${getApiKey("CLIENT_ID")}\"")
+        buildConfigField("String", "CLIENT_SECRET", "\"${getApiKey("CLIENT_SECRET")}\"")
+        buildConfigField("String", "REDIRECT_URI", "\"${getApiKey("REDIRECT_URI")}\"")
     }
 
     buildTypes {
@@ -36,6 +44,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -56,4 +65,36 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
     implementation(libs.androidx.browser)
+}
+
+fun getApiKey(propertyKey: String): String = getProps(propertyKey)
+
+@Suppress("UNCHECKED_CAST")
+fun <T> Project.getProps(key: String): T {
+    val localProps = gradleLocalProperties(rootDir)
+    return when {
+        localProps.hasProperty(key) -> {
+            localProps[key] as T
+        }
+
+        project.hasProperty(key) -> {
+            project.property(key) as T
+        }
+
+        else -> {
+            System.getenv(key) as T
+        }
+    }
+}
+
+fun gradleLocalProperties(projectRootDir: File): Properties {
+    val properties = Properties()
+    val localProperties = File(projectRootDir, "local.properties")
+
+    if (localProperties.isFile) {
+        InputStreamReader(FileInputStream(localProperties), Charsets.UTF_8).use { reader ->
+            properties.load(reader)
+        }
+    }
+    return properties
 }
