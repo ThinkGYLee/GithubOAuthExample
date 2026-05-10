@@ -101,7 +101,7 @@ fun GithubOAuthExampleScreen(
         Button(
             onClick = {
                 // AuthTabIntent를 생성합니다.
-                println("CustomTab Authentication Start")
+                println("AuthTab Authentication Start")
                 val authTabIntent = AuthTabIntent.Builder().build()
 
                 // 런처를 통해 인증을 시작합니다.
