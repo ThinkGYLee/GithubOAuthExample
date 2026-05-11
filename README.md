@@ -21,7 +21,7 @@
 
 ---
 
-##  핵심 비교: CustomTab vs AuthTab
+##  핵심 비교: CustomTab vs AuthTab (feat. ActivityResult)
 
 | 구분 | CustomTab (기존 방식) | AuthTab (리팩토링 방식) |
 | --- | --- | --- |
